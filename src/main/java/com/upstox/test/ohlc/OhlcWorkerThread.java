@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.upstox.test.model.BarChartModel;
 import com.upstox.test.model.TradeData;
 import com.upstox.test.tradeworker.TradeDataConfig;
+import com.upstox.test.utility.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +19,37 @@ public class OhlcWorkerThread implements Runnable {
 
     TradeDataConfig tradeDataConfig = TradeDataConfig.getTradeDataConfig_instance();
 
-    private List<TradeData> tradeDataList = null;
+    private List<TradeData> tradeDataList = new ArrayList<>();
     private String tradeSymbol;
     private int tradeStartPoint = 0;
-    private int barCount;
+    private int barCount =0;
 
     @Override
     public void run() {
 
         logger.info("OHLC compute thread started at interval of 15 seconds");
 
-        tradeDataList = tradeDataConfig.getTradeData().get(tradeSymbol);
-        int tradeSize = tradeDataList.size();
+        int tradeSize;
+
         List<TradeData> tempList = new ArrayList<>();
         CreateBarChart createBarChart = new CreateBarChart();
 
-        barCount++;
+        if (!tradeDataConfig.getTradeData().containsKey(tradeSymbol)) {
+            tradeSize = 0;
+        } else {
+            tradeDataList = tradeDataConfig.getTradeData().get(tradeSymbol);
+            tradeSize = tradeDataList.size();
+        }
 
         if ((tradeSize > 0) && (tradeSize > tradeStartPoint)) {
 
-            Collections.sort(tradeDataList);
-            long tradeEndpointTS = tradeDataList.get(tradeStartPoint).getTS2() + 15 * 1000;
+            try {
+                Collections.sort(tradeDataList);
+            } catch (Exception e){
+                logger.debug("incorrect data " + tradeSymbol + " " + e);
+            }
+
+            long tradeEndpointTS = tradeDataList.get(tradeStartPoint).getTS2() + 15;
 
             int i;
 
@@ -50,13 +61,20 @@ public class OhlcWorkerThread implements Runnable {
             tradeStartPoint = i;
 
         }
+
         try {
-            createBarChart.setBarCharData(tempList, barCount, tradeSymbol);
+            barCount = createBarChart.setBarCharData(tempList, barCount, tradeSymbol);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         tempList.clear();
+        barCount++;
+        try {
+            createBarChart.writeEmptyChart(barCount, tradeSymbol, Constants.INTERVAL_MSG);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setTradeSymbol(String tradeSymbol) {

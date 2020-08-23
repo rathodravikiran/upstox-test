@@ -19,7 +19,7 @@ public class ClientDataConfig {
         clientList = new HashSet<>();
     }
 
-    public static ClientDataConfig getClientDataConfig_Instance(){
+    public static ClientDataConfig getClientDataConfig_Instance() {
         if (clientDataConfig_Instance == null)
             clientDataConfig_Instance = new ClientDataConfig();
         return clientDataConfig_Instance;
