@@ -2,7 +2,7 @@ package com.upstox.test.controller;
 
 import com.upstox.test.model.Subscriber;
 import com.upstox.test.service.SubscribeServiceImpl;
-import com.upstox.test.tradeworker.ClientDataConfig;
+import com.upstox.test.config.ClientDataConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

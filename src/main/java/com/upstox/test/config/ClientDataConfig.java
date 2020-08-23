@@ -1,4 +1,4 @@
-package com.upstox.test.tradeworker;
+package com.upstox.test.config;
 
 import com.upstox.test.model.Subscriber;
 

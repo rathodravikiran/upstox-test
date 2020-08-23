@@ -1,13 +1,12 @@
 package com.upstox.test.ohlc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.upstox.test.model.BarChartModel;
+
 import com.upstox.test.model.TradeData;
-import com.upstox.test.tradeworker.TradeDataConfig;
+import com.upstox.test.config.TradeDataConfig;
 import com.upstox.test.utility.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,6 +71,7 @@ public class OhlcWorkerThread implements Runnable {
         barCount++;
         try {
             createBarChart.writeEmptyChart(barCount, tradeSymbol, Constants.INTERVAL_MSG);
+            logger.info("OHLC Trade worker thrade waiting for 15 seconds interval");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

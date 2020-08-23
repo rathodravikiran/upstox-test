@@ -1,5 +1,6 @@
-package com.upstox.test.tradeworker;
+package com.upstox.test.tradedataworker;
 
+import com.upstox.test.config.TradeDataConfig;
 import com.upstox.test.model.TradeData;
 import com.upstox.test.utility.Utility;
 
