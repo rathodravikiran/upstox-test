@@ -30,6 +30,7 @@ public class OhlcWorkerThread implements Runnable {
         tradeDataList = tradeDataConfig.getTradeData().get(tradeSymbol);
         int tradeSize = tradeDataList.size();
         List<TradeData> tempList = new ArrayList<>();
+        CreateBarChart createBarChart = new CreateBarChart();
 
         barCount++;
 
@@ -44,18 +45,17 @@ public class OhlcWorkerThread implements Runnable {
                 tempList.add(tradeDataList.get(i));
 
             }
-            CreateBarChart createBarChart = new CreateBarChart();
+
             tradeStartPoint = i;
 
 //            setBarCharData(tempList);
-            createBarChart.setBarCharData(tempList, barCount);
-
-            tempList.clear();
 
 
-        } else {
-            System.out.println("No trade data to publish for trade " + tradeSymbol + " barCount " + barCount);
+
         }
+        createBarChart.setBarCharData(tempList, barCount, tradeSymbol);
+
+        tempList.clear();
     }
 
     public void setTradeSymbol(String tradeSymbol) {
