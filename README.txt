@@ -5,7 +5,7 @@ Libraries used:
         spring-boot 2.3.3.RELEASE
         jackson-databind 2.11.1
 
-Feature:
+Features:
         1) REST Controller to subscribe client
 
             1) POST http://localhost:7070/subscribe

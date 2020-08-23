@@ -25,7 +25,7 @@ public class SubscribeController {
     SubscribeServiceImpl subscribeService;
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.POST)
-    public ResponseEntity<?> postSubscribe(@RequestBody(required = false) String clientData) throws Exception {
+    public ResponseEntity<?> postSubscriber(@RequestBody(required = false) String clientData) throws Exception {
         logger.info("Executing subscriber controller " + clientData);
 
         ResponseEntity<?> responseEntity = subscribeService.clientSubscribe(clientData);
