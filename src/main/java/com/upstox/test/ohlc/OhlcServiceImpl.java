@@ -15,15 +15,15 @@ public class OhlcServiceImpl implements OhlcService {
     @Override
     public void computeOhlc(Subscriber subscriber) throws InterruptedException {
 
-        logger.info("OHLC computing started for trade " + subscriber.getSymbol() + " " + "At interval " + subscriber.getInterval());
+        logger.info("Start OHLC worker thread for   " + subscriber.getSymbol());
 
         OhlcWorkerThread ohlcWorkerThread = new OhlcWorkerThread();
         ohlcWorkerThread.setTradeSymbol(subscriber.getSymbol());
 
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(ohlcWorkerThread, 1, 1, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(ohlcWorkerThread, subscriber.getInterval(), subscriber.getInterval(), TimeUnit.SECONDS);
 
-        Thread.sleep(10000);
-        scheduledExecutorService.shutdown();
+//        Thread.sleep(50000);
+//        scheduledExecutorService.shutdown();
     }
 }

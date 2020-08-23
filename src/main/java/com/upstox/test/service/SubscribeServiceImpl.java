@@ -5,6 +5,7 @@ import com.upstox.test.model.SubscribeResponse;
 import com.upstox.test.model.Subscriber;
 import com.upstox.test.ohlc.OhlcServiceImpl;
 import com.upstox.test.tradeworker.ClientDataConfig;
+import com.upstox.test.tradeworker.TradeDataRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,9 @@ public class SubscribeServiceImpl implements SubscribeService {
             response.setMessage("Client Subscribed successfully for trade..!" + subscriber.getSymbol());
             response.setStatus(HttpStatus.OK);
             logger.info("Client subscribed for trade " + subscriber.getSymbol());
+
+            if (!(clientDataConfig.getClientList().size() > 1))
+                new Thread(new TradeDataRepository()).start();
 
             new Thread(() -> {
                 try {

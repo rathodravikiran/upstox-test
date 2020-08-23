@@ -33,7 +33,7 @@ public class SubscribeController {
 
     }
 
-    @RequestMapping(value = "/subscribe", method = RequestMethod.GET)
+    @RequestMapping(value = "/subscribers", method = RequestMethod.GET)
     public Set<Subscriber> getSubscriber() throws Exception {
         logger.info("Executing GetSubscribers controller ");
         ClientDataConfig clientDataConfig = ClientDataConfig.getClientDataConfig_Instance();

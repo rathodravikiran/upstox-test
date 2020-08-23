@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "b26dde59-30d3-49cc-8289-57c350013731",
+		"name": "upstoxTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "subscribe",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"event\": \"subscribe\", \"symbol\": \"XXBTZUSD\", \"interval\": 15}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7070/subscribe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subscribe - Negative",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"event\": \"subscribe\", \"symbol\": \"\", \"interval\": 15}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7070/subscribe",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"subscribe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSubscriber",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7070/subscribers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"subscribers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

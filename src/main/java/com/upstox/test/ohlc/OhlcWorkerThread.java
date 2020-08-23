@@ -27,7 +27,7 @@ public class OhlcWorkerThread implements Runnable {
     @Override
     public void run() {
 
-        logger.info("OHLC compute thread started at interval of 15 seconds");
+        logger.info("OHLC compute worker thread started at an interval of 15 seconds");
 
         int tradeSize;
 
@@ -49,7 +49,7 @@ public class OhlcWorkerThread implements Runnable {
                 logger.debug("incorrect data " + tradeSymbol + " " + e);
             }
 
-            long tradeEndpointTS = tradeDataList.get(tradeStartPoint).getTS2() + 15;
+            long tradeEndpointTS = tradeDataList.get(tradeStartPoint).getTS2() + 15*1000;
 
             int i;
 

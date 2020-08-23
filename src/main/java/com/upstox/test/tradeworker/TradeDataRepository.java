@@ -6,14 +6,10 @@ import com.upstox.test.utility.Utility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
-import java.io.IOException;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -21,22 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TradeDataRepository {
+public class TradeDataRepository implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(TradeDataRepository.class);
 
-    @Autowired
-    private TradeData tradeData;
+    private TradeData tradeData = new TradeData();
 
     private TradeDataConfig tradeDataConfig = TradeDataConfig.getTradeDataConfig_instance();
 
-    @Autowired
-    Utility utility;
 
-    @PostConstruct
-    public void readJson() throws IOException {
+    Utility utility = new Utility();
 
-        logger.info("Read trade data from json");
+    @Override
+    public void run() {
+
+        logger.info("Read trade data from json file");
 
         String jsonString = null;
 
@@ -54,7 +49,7 @@ public class TradeDataRepository {
                 }
 
             } catch (Exception e) {
-                System.out.println("error reading file " + e);
+                logger.debug("Error while reading json file " + e);
             }
         }
 
@@ -62,7 +57,7 @@ public class TradeDataRepository {
 
     private void storeTradeData(TradeData tradeData) {
 
-        logger.info("Add trade data to map list repository " + tradeData);
+        logger.debug("Add trade data to map list repository " + tradeData);
 
         List<TradeData> tradeDataList;
 

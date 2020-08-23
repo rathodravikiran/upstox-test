@@ -20,16 +20,9 @@ public class Utility {
     @Autowired
     TradeData tradeData;
 
-    public <T> T jsonToObj(String json, Class<T> convertToObject) throws IOException {
-        logger.info("json to object " + json);
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        return mapper.readValue(json, convertToObject);
-    }
-
     public TradeData jsonToObjTradeData(String json) throws IOException, JSONException {
 
-        logger.info("Convert Json To Trade Data model");
+        logger.debug("Convert Json file To Trade Data model");
 
         ObjectMapper mapper = new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
