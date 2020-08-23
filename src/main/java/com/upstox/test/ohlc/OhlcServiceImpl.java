@@ -23,7 +23,5 @@ public class OhlcServiceImpl implements OhlcService {
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(ohlcWorkerThread, subscriber.getInterval(), subscriber.getInterval(), TimeUnit.SECONDS);
 
-//        Thread.sleep(50000);
-//        scheduledExecutorService.shutdown();
     }
 }
