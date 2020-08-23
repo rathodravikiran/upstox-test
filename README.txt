@@ -4,6 +4,7 @@ Project : Upstox coding assignment
 Libraries used:
         spring-boot 2.3.3.RELEASE
         jackson-databind 2.11.1
+        junit
 
 Note: No comments added in Class or methods as they are designed for single responsibility and self explanatory functionality
 

@@ -35,7 +35,7 @@ public class SubscribeServiceImpl implements SubscribeService {
     @Override
     public ResponseEntity<?> clientSubscribe(String subscribeData) throws IOException {
 
-        logger.info("Client subscribing for trade " + subscribeData);
+        logger.debug("Client subscribing for trade " + subscribeData);
 
         try {
             Subscriber subscriber = new ObjectMapper().readValue(subscribeData, Subscriber.class);
@@ -45,7 +45,7 @@ public class SubscribeServiceImpl implements SubscribeService {
                 addToClientList(subscriber);
 
             } else {
-                response.setMessage("Unable to subscribe, Invalid input");
+                response.setMessage("Invalid input! Unable to subscribe ");
                 response.setStatus(HttpStatus.BAD_REQUEST);
                 logger.info("Unable to subscribe client, Invalid input => " + subscribeData);
             }
@@ -68,21 +68,22 @@ public class SubscribeServiceImpl implements SubscribeService {
     }
 
     private void addToClientList(Subscriber subscriber) throws InterruptedException {
+
         if (clientDataConfig.getClientList().add(subscriber)) {
-            response.setMessage("Client Subscribed successfully for trade..!" + subscriber.getSymbol());
+            response.setMessage("Client Subscribed successfully for trade => " + subscriber.getSymbol());
             response.setStatus(HttpStatus.OK);
             logger.info("Client subscribed for trade " + subscriber.getSymbol());
 
             if (!(clientDataConfig.getClientList().size() > 1))
                 new Thread(new TradeDataRepository()).start();
 
-            new Thread(() -> {
-                try {
-                    ohlcService.computeOhlc(subscriber);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            try {
+
+                ohlcService.computeOhlc(subscriber);
+
+            } catch (InterruptedException e) {
+                logger.debug("Error while scheduling OHLC thred  " + e);
+            }
 
 
         } else {
