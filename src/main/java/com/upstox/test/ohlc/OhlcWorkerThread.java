@@ -1,5 +1,6 @@
 package com.upstox.test.ohlc;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.upstox.test.model.BarChartModel;
 import com.upstox.test.model.TradeData;
 import com.upstox.test.tradeworker.TradeDataConfig;
@@ -25,7 +26,7 @@ public class OhlcWorkerThread implements Runnable {
     @Override
     public void run() {
 
-        logger.info("OHLC compute thread started at interval 15");
+        logger.info("OHLC compute thread started at interval of 15 seconds");
 
         tradeDataList = tradeDataConfig.getTradeData().get(tradeSymbol);
         int tradeSize = tradeDataList.size();
@@ -48,45 +49,18 @@ public class OhlcWorkerThread implements Runnable {
 
             tradeStartPoint = i;
 
-//            setBarCharData(tempList);
-
-
-
         }
-        createBarChart.setBarCharData(tempList, barCount, tradeSymbol);
+        try {
+            createBarChart.setBarCharData(tempList, barCount, tradeSymbol);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         tempList.clear();
     }
 
     public void setTradeSymbol(String tradeSymbol) {
         this.tradeSymbol = tradeSymbol;
-    }
-
-    private void setBarCharData(List<TradeData> tempList) {
-
-        logger.info("creating bar chart data");
-
-        List<BarChartModel> barChartList = new ArrayList<>();
-        double quantity = 0.0;
-
-        for (int i = 0; i < tempList.size(); i++) {
-
-            BarChartModel barChartModel = new BarChartModel();
-
-            barChartModel.setO(tempList.get(i).getP());
-            barChartModel.setH(tempList.get(i).getP());
-            barChartModel.setL(tempList.get(i).getP());
-            barChartModel.setC(tempList.get(i).getP());
-            quantity += tempList.get(i).getQ();
-            barChartModel.setVolume(quantity);
-            barChartModel.setSymbol(tempList.get(i).getSym());
-            barChartModel.setBar_num(barCount);
-
-            barChartList.add(barChartModel);
-        }
-        for (BarChartModel br : barChartList)
-            System.out.println(br);
-
     }
 
 }
