@@ -4,13 +4,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BarChartModel {
-    private double o;
-    private double h;
-    private double l;
-    private double c;
-    private double volume;
+    private double o;           //Open trade price
+    private double h;           //High trade price
+    private double l;           //Low trade price
+    private double c;           //Close trade price
+    private double volume;      //Accumulative quantity
     private final String event = "ohlc_notify";
-    private String symbol;
+    private String symbol;       // Trade symbol
     private int bar_num;
 
     public double getO() {
