@@ -1,38 +1,16 @@
 package com.upstox.test.model;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
+@Data
 public class Subscriber {
     private String event;
     private String symbol;
     private int interval;
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public int getInterval() {
-        return interval;
-    }
-
-    public void setInterval(int interval) {
-        this.interval = interval;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,12 +25,4 @@ public class Subscriber {
         return Objects.hash(symbol);
     }
 
-    @Override
-    public String toString() {
-        return "Subscriber{" +
-                "event='" + event + '\'' +
-                ", symbol='" + symbol + '\'' +
-                ", interval=" + interval +
-                '}';
-    }
 }
